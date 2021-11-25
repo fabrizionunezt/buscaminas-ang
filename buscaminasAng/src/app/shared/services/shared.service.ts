@@ -16,6 +16,7 @@ export class SharedService {
       width: '600px',
       height:'350px',
       data: data,
+      disableClose: true,
     });
     return new Promise((resolve,reject)=>{
       dialogRef.afterClosed().subscribe((result:boolean) => {

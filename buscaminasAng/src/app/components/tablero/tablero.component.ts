@@ -8,16 +8,21 @@ import { Cell } from 'src/app/models/cell';
 })
 export class TableroComponent implements OnInit {
 
-  gridSide: number = 10;
+  gridSide: number = 20;
+  cellsAmount: number = 0;
   cells: Cell[] = [];
   bombAmount: number = 20;
   isGameOver: boolean = false;
 
   constructor() {
+    this.initialize();
     this.createBoard();
   }
 
   ngOnInit(): void {
+  }
+  initialize(){
+    this.cellsAmount = this.gridSide * this.gridSide;
   }
 
   createBoard() {
@@ -49,13 +54,13 @@ export class TableroComponent implements OnInit {
       const isRightEdge = (i % this.gridSide === this.gridSide - 1)
       if (!cell.bomb) {
         if (i > 0 && !isLeftEdge && this.cells[i - 1].bomb) total++;//izquierda
-        if (i > 9 && !isRightEdge && this.cells[i + 1 - this.gridSide].bomb) total++;//derecha arriba
-        if (i > 9 && this.cells[i - this.gridSide].bomb) total++; //arriba
-        if (i > 10 && !isLeftEdge && this.cells[i - 1 - this.gridSide].bomb) total++;//izquierda arriba
-        if (i < 98 && !isRightEdge && this.cells[i + 1].bomb) total++;//derecha
-        if (i < 90 && !isLeftEdge && this.cells[i - 1 + this.gridSide].bomb) total++;//izquierda abajo
-        if (i < 88 && !isRightEdge && this.cells[i + 1 + this.gridSide].bomb) total++;//derecha abajo
-        if (i < 89 && this.cells[i + this.gridSide].bomb) total++;//abajo
+        if (i > (this.gridSide - 1) && !isRightEdge && this.cells[i + 1 - this.gridSide].bomb) total++;//derecha arriba
+        if (i > (this.gridSide - 1) && this.cells[i - this.gridSide].bomb) total++; //arriba
+        if (i > this.gridSide && !isLeftEdge && this.cells[i - 1 - this.gridSide].bomb) total++;//izquierda arriba
+        if (i < (this.cellsAmount - 2) && !isRightEdge && this.cells[i + 1].bomb) total++;//derecha
+        if (i < (this.cellsAmount - this.gridSide) && !isLeftEdge && this.cells[i - 1 + this.gridSide].bomb) total++;//izquierda abajo
+        if (i < (this.cellsAmount - (this.gridSide+2)) && !isRightEdge && this.cells[i + 1 + this.gridSide].bomb) total++;//derecha abajo
+        if (i < (this.cellsAmount - (this.gridSide+1)) && this.cells[i + this.gridSide].bomb) total++;//abajo
         cell.amountBombs = total;
         cell.id = i;
         this.cells[i] = cell;
@@ -87,39 +92,19 @@ export class TableroComponent implements OnInit {
         if (!newSquare.bomb)
           this.clickCell(newSquare)
       }
-      /*if (cell.id > 9 && !isRightEdge) {
-        const newId = this.cells[cell.id +1 -this.gridSide].id
-        const newSquare = this.cells[newId]
-        this.clickCell(newSquare)
-      }*/
-      if (cell.id > 9) {
+      if (cell.id > (this.gridSide-1)) {
         const newId = this.cells[cell.id - this.gridSide].id
         const newSquare = this.cells[newId]
         if (!newSquare.bomb)
           this.clickCell(newSquare)
       }
-      /*if (cell.id > 11 && !isLeftEdge) {
-        const newId = this.cells[cell.id -1 -this.gridSide].id
-        const newSquare = this.cells[newId]
-        this.clickCell(newSquare)
-      }*/
-      if (cell.id < 98 && !isRightEdge) {
+      if (cell.id < (this.cellsAmount - (this.gridSide+2)) && !isRightEdge) {
         const newId = this.cells[cell.id + 1].id
         const newSquare = this.cells[newId]
         if (!newSquare.bomb)
           this.clickCell(newSquare)
       }
-      /*if (cell.id < 90 && !isLeftEdge) {
-        const newId = this.cells[cell.id -1 +this.gridSide].id
-        const newSquare = this.cells[newId]
-        this.clickCell(newSquare)
-      }
-      if (cell.id < 88 && !isRightEdge) {
-        const newId = this.cells[cell.id +1 +this.gridSide].id
-        const newSquare = this.cells[newId]
-        this.clickCell(newSquare)
-      }*/
-      if (cell.id < 89) {
+      if (cell.id < (this.cellsAmount - (this.gridSide+2))) {
         const newId = this.cells[cell.id + this.gridSide].id
         const newSquare = this.cells[newId]
         if (!newSquare.bomb)

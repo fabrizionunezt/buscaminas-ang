@@ -2,16 +2,12 @@ import { Emoji } from "src/app/models/emoji";
 
 export const emojis: Emoji[] = [
     {
-        name: 'guiño',
+        name: 'guino',
         msg: '😉'
     },
     {
         name: 'sonriendo',
         msg: '🙂'
-    },
-    {
-      name: 'pensando',
-      msg: '🤔'
     },
     {
       name: 'asustado',
@@ -32,5 +28,9 @@ export const emojis: Emoji[] = [
     {
       name: 'pensando',
       msg: '🤔'
+    },
+    {
+      name: 'revez',
+      msg: '🙃'
     }
   ]

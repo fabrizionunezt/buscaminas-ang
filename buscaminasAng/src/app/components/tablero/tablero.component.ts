@@ -19,10 +19,11 @@ export class TableroComponent implements OnInit {
   flags: number = 0;
   time: number = 0;
   timerId!: any;
+  image:string = '🙂';
 
 
 
-  constructor( private svcShared: SharedService) {
+  constructor(private svcShared: SharedService) {
     this.initialize();
     this.createBoard();
   }
@@ -81,7 +82,7 @@ export class TableroComponent implements OnInit {
     event.preventDefault();
     if (this.isGameOver) return
 
-    if (!cell.checked ) {
+    if (!cell.checked) {
       if (!cell.questionMark && cell.flag) {
         cell.flag = false;
         cell.questionMark = true;
@@ -89,14 +90,14 @@ export class TableroComponent implements OnInit {
         this.flags--;
         return;
       }
-      else if(cell.questionMark) {
+      else if (cell.questionMark) {
         cell.innerMsg = '';
         cell.questionMark = false;
         return;
       }
     }
-    
-    if (!cell.checked && (this.flags < this.bombAmount)  && !cell.questionMark) {
+
+    if (!cell.checked && (this.flags < this.bombAmount) && !cell.questionMark) {
       if (!cell.flag) {
         cell.flag = true;
         cell.innerMsg = ' 🚩';
@@ -105,7 +106,7 @@ export class TableroComponent implements OnInit {
         return;
       }
     }
-    
+
   }
 
   clickCell(cell: Cell) {
@@ -153,9 +154,9 @@ export class TableroComponent implements OnInit {
     }, 30)
   }
 
-  gameOver() {
-    console.log('GAME OVER');
+  async gameOver() {
     this.isGameOver = true;
+    this.updateImage('exploto');
     for (let i = 0; i < this.cells.length; i++) {
       let cell = this.cells[i];
       if (cell.bomb) {
@@ -167,30 +168,39 @@ export class TableroComponent implements OnInit {
     this.stopTimer();
 
     let dataDialog: DialogMessageData = {
-      state: true,
-      bodyMsg: 'Has podido finalizar el juego exitosamente!!',
+      state: false,
+      bodyMsg: 'No has podido finalizar el juego!!',
       time: this.getFinishTime(),
-      title: 'Felicitaciones'
+      title: 'Has Perdido'
     };
-    this.svcShared.openDialogMensaje(dataDialog);
+    let reiniciar = await this.svcShared.openDialogMensaje(dataDialog);
+    if (reiniciar) {
+      this.cleanData();
+      this.createBoard();
+    }
   }
 
-  checkForWin() {
+  async checkForWin() {
     let bombs = this.cells.filter(x => x.bomb);
     let match = bombs.every(x => x.flag);
     if (match) {
-      console.log('YOU WIN');
+      this.isGameOver = true;
+      this.updateImage('ganador');
+      this.stopTimer();
+      let dataDialog: DialogMessageData = {
+        state: true,
+        bodyMsg: 'Has podido finalizar el juego exitosamente!!',
+        time: this.getFinishTime(),
+        title: 'Felicitaciones'
+      };
+      let reiniciar = await this.svcShared.openDialogMensaje(dataDialog);
+      if (reiniciar) {
+        this.cleanData();
+        this.createBoard();
+      }
     }
-    this.stopTimer();
-    
-    let dataDialog: DialogMessageData = {
-      state: true,
-      bodyMsg: 'Has podido finalizar el juego exitosamente!!',
-      time: this.getFinishTime(),
-      title: 'Felicitaciones'
-    };
-    let resultado = this.svcShared.openDialogMensaje(dataDialog);
-    console.log(resultado);
+
+
   }
 
   public getStylesTablero() {
@@ -208,6 +218,7 @@ export class TableroComponent implements OnInit {
   initializeTimer() {
     this.timerId = setInterval(() => {
       this.time++;
+      this.changeImage();
     }, 1000);
 
   }
@@ -217,15 +228,37 @@ export class TableroComponent implements OnInit {
     }
   }
 
+  changeImage(){
+    const images = ['guino','sonriendo','asustado','pensando','revez'];
+    if(this.time % 3 == 0){
+      let selected = images[Math.floor(Math.random()*images.length)];
+      this.updateImage(selected);
+    }
+
+  }
+
   leadingZeros(value: number, size: number) {
     let num = value.toString();
     while (num.length < size) num = "0" + num;
     return num;
   }
-  getFinishTime(){
+  getFinishTime() {
     var minutes = Math.floor(this.time / 60);
     var seconds = this.time - minutes * 60;
-    let result = `${this.leadingZeros(minutes,2)}:${this.leadingZeros(seconds,2)}`;
+    let result = `${this.leadingZeros(minutes, 2)}:${this.leadingZeros(seconds, 2)}`;
     return result;
+  }
+  cleanData(){
+    this.cells = [];
+    this.isGameOver = false;
+    this.flags = 0;
+    this.time = 0;
+  }
+
+  updateImage(filter: string){
+    let emoji = emojis.filter(x => x.name == filter).pop()?.msg;
+    if(emoji){
+      this.image = emoji;
+    }
   }
 }

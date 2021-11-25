@@ -5,7 +5,7 @@ import { DialogMessageData } from 'src/app/models/dialogMessageData';
 @Component({
   selector: 'app-dialog-message',
   templateUrl: './dialog-message.component.html',
-  styleUrls: ['./dialog-message.component.sass']
+  styleUrls: ['./dialog-message.component.scss']
 })
 export class DialogMessageComponent implements OnInit {
 
@@ -16,7 +16,7 @@ export class DialogMessageComponent implements OnInit {
   }
 
   reiniciar(){
-    this.dialogRef.close(false);
+    this.dialogRef.close(true);
   }
 
 }

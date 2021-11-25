@@ -13,16 +13,20 @@ export class SharedService {
   openDialogMensaje(data: DialogMessageData) {
     const dialogRef = this.dialog.open(DialogMessageComponent, {
       width: '600px',
-      height:'600px',
+      height:'350px',
       data: data,
     });
-
-    dialogRef.afterClosed().subscribe(result => {
-      let menu = false;
-      if(result){
-        menu = result;
-      }
-      return result;
-    });
+    return new Promise((resolve,reject)=>{
+      dialogRef.afterClosed().subscribe((result:boolean) => {
+        let menu = false;
+        if(result){
+          menu = result;
+        }
+        resolve(result)
+      },error =>{
+        reject(false);
+      });
+    })
+    
   }
 }

@@ -8,11 +8,12 @@ import { Cell } from 'src/app/models/cell';
 })
 export class TableroComponent implements OnInit {
 
-  gridSide: number = 15;
+  gridSide: number = 20;
   cellsAmount: number = 0;
   cells: Cell[] = [];
   bombAmount: number = 20;
   isGameOver: boolean = false;
+  flags:number = 0;
 
   constructor() {
     this.initialize();
@@ -66,6 +67,22 @@ export class TableroComponent implements OnInit {
         this.cells[i] = cell;
       }
     };
+  }
+  addFlag(event: any,cell: Cell) {
+    event.preventDefault();
+    if (this.isGameOver) return
+    if (!cell.checked && (this.flags < this.bombAmount) || cell.flag) {
+      if (!cell.flag) {
+        cell.flag = true;
+        cell.innerMsg = ' 🚩';
+        this.flags ++;
+        //checkForWin()
+      } else {
+        cell.flag = false;
+        cell.innerMsg = '';
+        this.flags --
+      }
+    }
   }
 
   clickCell(cell: Cell) {

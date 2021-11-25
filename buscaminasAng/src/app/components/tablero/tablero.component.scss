@@ -1,0 +1,35 @@
+$colorCasillero: #c0c0c0;
+$bordeClaro: #fcfcfc;
+$bordeOscuro: #868780;
+.contenedor-juego {
+  background-color: lightgray;
+  height: 100vh;
+  width: 100vw;
+  
+  .header {
+    height: 10%;
+    width: 600px;
+    background-color: darkgray;
+    .timer {
+      height: 100%;
+      background-color: darkorchid;
+    }
+  }
+  .tablero {
+    height: 600px;
+    width: 600px;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    
+    .casillero {
+      aspect-ratio: 1;
+      width: 60px;
+      background-color: $colorCasillero;
+      border-left: 4px solid $bordeClaro;
+      border-top: 4px solid $bordeClaro;
+      border-right: 4px solid $bordeOscuro;
+      border-bottom: 4px solid $bordeOscuro;
+    }
+  }
+}

@@ -1,1 +1,10 @@
-<p>tablero works!</p>
+<div class="p-2 contenedor-juego d-flex flex-column align-items-center">
+    <div class="header">
+        <div class="timer"></div>
+        <div class="title"></div>
+        <div class="flags"></div>
+    </div>
+    <div class="tablero">
+        <div class="casillero" *ngFor="let cell of cells"></div>
+    </div>
+</div>

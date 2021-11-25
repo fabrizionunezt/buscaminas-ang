@@ -15,6 +15,8 @@ export class TableroComponent implements OnInit {
   bombAmount: number = 30;
   isGameOver: boolean = false;
   flags: number = 0;
+  time: number = 0;
+  timerId!: any;
   
 
   constructor() {
@@ -47,6 +49,7 @@ export class TableroComponent implements OnInit {
     }
     this.cells.sort(() => Math.random() - 0.5);
     this.fillBombAmount();
+    this.initializeTimer();
   }
 
   fillBombAmount() {
@@ -143,6 +146,7 @@ export class TableroComponent implements OnInit {
         this.cells[i] = cell;
       }
     }
+    this.stopTimer();
   }
 
   checkForWin() {
@@ -151,6 +155,7 @@ export class TableroComponent implements OnInit {
     if (match) {
       console.log('YOU WIN');
     }
+    this.stopTimer();
   }
 
   public getStylesTablero() {
@@ -163,6 +168,24 @@ export class TableroComponent implements OnInit {
     return {
       'width': `${600 / this.gridSide}px`,
     };
+  }
+
+  initializeTimer(){
+    this.timerId = setInterval(() => {
+      this.time++;
+    }, 1000);
+    
+  }
+  stopTimer(){
+    if(this.isGameOver){
+      clearInterval(this.timerId);
+    }
+  }
+
+  leadingZeros(value :number, size:number) {
+    let num = value.toString();
+    while (num.length < size) num = "0" + num;
+    return num;
   }
 
 }

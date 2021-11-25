@@ -20,7 +20,7 @@ export class TableroComponent implements OnInit {
   flags: number = 0;
   time: number = 0;
   timerId!: any;
-  image:string = '🙂';
+  image: string = '🙂';
 
 
 
@@ -178,9 +178,8 @@ export class TableroComponent implements OnInit {
     };
     let reiniciar = await this.svcShared.openDialogMensaje(dataDialog);
     if (reiniciar) {
-      this.cleanData();
-      this.createBoard();
-    }else{
+      this.restartGame()
+    } else {
       this.redirectMenu();
     }
   }
@@ -200,9 +199,8 @@ export class TableroComponent implements OnInit {
       };
       let reiniciar = await this.svcShared.openDialogMensaje(dataDialog);
       if (reiniciar) {
-        this.cleanData();
-        this.createBoard();
-      }else{
+        this.restartGame()
+      } else {
         this.redirectMenu();
       }
     }
@@ -235,10 +233,10 @@ export class TableroComponent implements OnInit {
     }
   }
 
-  changeImage(){
-    const images = ['guino','sonriendo','asustado','pensando','revez'];
-    if(this.time % 3 == 0){
-      let selected = images[Math.floor(Math.random()*images.length)];
+  changeImage() {
+    const images = ['guino', 'sonriendo', 'asustado', 'pensando', 'revez'];
+    if (this.time % 3 == 0) {
+      let selected = images[Math.floor(Math.random() * images.length)];
       this.updateImage(selected);
     }
 
@@ -255,21 +253,28 @@ export class TableroComponent implements OnInit {
     let result = `${this.leadingZeros(minutes, 2)}:${this.leadingZeros(seconds, 2)}`;
     return result;
   }
-  cleanData(){
+  cleanData() {
+
     this.cells = [];
     this.isGameOver = false;
     this.flags = 0;
     this.time = 0;
+
   }
 
-  updateImage(filter: string){
+  updateImage(filter: string) {
     let emoji = emojis.filter(x => x.name == filter).pop()?.msg;
-    if(emoji){
+    if (emoji) {
       this.image = emoji;
     }
   }
 
-  redirectMenu(){
+  restartGame() {
+    this.cleanData();
+    this.createBoard();
+  }
+
+  redirectMenu() {
     this.router.navigateByUrl('menu');
   }
 }

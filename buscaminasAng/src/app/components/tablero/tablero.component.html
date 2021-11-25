@@ -1,28 +1,48 @@
 <div class="p-1 contenedor-juego d-flex flex-column align-items-center">
-    <div class="header d-flex flex-row justify-content-between align-items-center p-2">
-        <div class="d-flex flex-row justify-content-start w-100">
-            <div class="digital d-flex flex-row justify-content-end">
-                <span>{{leadingZeros(bombAmount-flags, 4)}}</span>
+    <div class="window">
+        <div class="title-bar">
+            <div class="title-bar-text">
+                Buscaminas.exe
+            </div>
+            <div class="title-bar-controls">
+                <button aria-label="Minimize"></button>
+                <button aria-label="Maximize"></button>
+                <button aria-label="Close"></button>
             </div>
         </div>
-        <div class="title d-flex flex-row justify-content-center w-100">
-            {{this.image}}
-        </div>
-        <div class="d-flex flex-row justify-content-end w-100">
-            <div class="digital d-flex flex-row justify-content-end">
-                <span>{{time * 1000| date:'mm:ss'}}</span>
+        <div class="window-body">
+            <div class="header d-flex flex-row justify-content-between align-items-center p-2">
+                <div class="d-flex flex-row justify-content-start w-100">
+                    <div class="digital d-flex flex-row justify-content-end">
+                        <span>{{leadingZeros(bombAmount-flags, 4)}}</span>
+                    </div>
+                </div>
+                <div class="title d-flex flex-row justify-content-center w-100">
+                    {{this.image}}
+                </div>
+                <div class="d-flex flex-row justify-content-end w-100">
+                    <div class="digital d-flex flex-row justify-content-end">
+                        <span>{{time * 1000| date:'mm:ss'}}</span>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-    <div class="tablero" [ngStyle]="getStylesTablero()">
-        <div class="casillero" [ngStyle]="getStylesCells()"  [ngClass]="{'checked': cell.checked}" (click)="clickCell(cell)" (contextmenu)="addFlag($event,cell)" *ngFor="let cell of cells">
-            <div class="d-flex flex-row justify-content-center align-items-center h-100 w-100">
-                <span *ngIf="cell.checked || cell.flag || cell.questionMark" [ngClass]="{'one': cell.amountBombs == 1 && !cell.flag , 
+            <div class="tablero" [ngStyle]="getStylesTablero()">
+                <div class="casillero" [ngStyle]="getStylesCells()" [ngClass]="{'checked': cell.checked}"
+                    (click)="clickCell(cell)" (contextmenu)="addFlag($event,cell)" *ngFor="let cell of cells">
+                    <div class="d-flex flex-row justify-content-center align-items-center h-100 w-100">
+                        <span *ngIf="cell.checked || cell.flag || cell.questionMark" [ngClass]="{'one': cell.amountBombs == 1 && !cell.flag , 
                 'two': cell.amountBombs == 2 || (cell.flag && cell.bomb && cell.checked), 'three': cell.amountBombs == 3 || (cell.flag && !cell.checked),
                 'four': cell.amountBombs >= 4 && !cell.flag }">
-                    {{cell.innerMsg}}
-                </span>
+                            {{cell.innerMsg}}
+                        </span>
+                    </div>
+                </div>
             </div>
+            <div class="footer-actions mt-4 d-flex flex-row justify-content-end">
+                <button class="m-1" (click)="redirectMenu()">IR AL MENU</button>
+            </div>
+
         </div>
+
     </div>
 </div>

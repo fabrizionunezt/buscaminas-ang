@@ -2,3 +2,8 @@
 
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
+@font-face {
+    font-family: digital;
+    src: url(assets/fonts/DS-DIGI.TTF) format("truetype");
+    font-weight: bold;
+}

@@ -7,12 +7,16 @@ $bordeOscuro: #868780;
   width: 100vw;
   
   .header {
+    font-family: 'digital';
     height: 50px;
     width: 600px;
     background-color: darkgray;
-    .timer {
-      height: 100%;
-      background-color: darkorchid;
+    font-size: 25px;
+    .digital{
+        width: 35%;
+        padding: 0.1rem;
+        color: red;
+        background-color: black;
     }
   }
   .tablero {

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Cell } from 'src/app/models/cell';
+import { emojis } from 'src/app/shared/const/constantes';
 
 @Component({
   selector: 'app-tablero',
@@ -11,9 +12,10 @@ export class TableroComponent implements OnInit {
   gridSide: number = 20;
   cellsAmount: number = 0;
   cells: Cell[] = [];
-  bombAmount: number = 20;
+  bombAmount: number = 30;
   isGameOver: boolean = false;
-  flags:number = 0;
+  flags: number = 0;
+  
 
   constructor() {
     this.initialize();
@@ -22,7 +24,7 @@ export class TableroComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  initialize(){
+  initialize() {
     this.cellsAmount = this.gridSide * this.gridSide;
   }
 
@@ -60,27 +62,27 @@ export class TableroComponent implements OnInit {
         if (i > this.gridSide && !isLeftEdge && this.cells[i - 1 - this.gridSide].bomb) total++;//izquierda arriba
         if (i < (this.cellsAmount - 2) && !isRightEdge && this.cells[i + 1].bomb) total++;//derecha
         if (i < (this.cellsAmount - this.gridSide) && !isLeftEdge && this.cells[i - 1 + this.gridSide].bomb) total++;//izquierda abajo
-        if (i < (this.cellsAmount - (this.gridSide+2)) && !isRightEdge && this.cells[i + 1 + this.gridSide].bomb) total++;//derecha abajo
-        if (i < (this.cellsAmount - (this.gridSide+1)) && this.cells[i + this.gridSide].bomb) total++;//abajo
+        if (i < (this.cellsAmount - (this.gridSide + 2)) && !isRightEdge && this.cells[i + 1 + this.gridSide].bomb) total++;//derecha abajo
+        if (i < (this.cellsAmount - (this.gridSide + 1)) && this.cells[i + this.gridSide].bomb) total++;//abajo
         cell.amountBombs = total;
         cell.id = i;
         this.cells[i] = cell;
       }
     };
   }
-  addFlag(event: any,cell: Cell) {
+  addFlag(event: any, cell: Cell) {
     event.preventDefault();
     if (this.isGameOver) return
     if (!cell.checked && (this.flags < this.bombAmount) || cell.flag) {
       if (!cell.flag) {
         cell.flag = true;
         cell.innerMsg = ' 🚩';
-        this.flags ++;
-        //checkForWin()
+        this.flags++;
+        this.checkForWin()
       } else {
         cell.flag = false;
         cell.innerMsg = '';
-        this.flags --
+        this.flags--
       }
     }
   }
@@ -109,19 +111,19 @@ export class TableroComponent implements OnInit {
         if (!newSquare.bomb)
           this.clickCell(newSquare)
       }
-      if (cell.id > (this.gridSide-1)) {
+      if (cell.id > (this.gridSide - 1)) {
         const newId = this.cells[cell.id - this.gridSide].id
         const newSquare = this.cells[newId]
         if (!newSquare.bomb)
           this.clickCell(newSquare)
       }
-      if (cell.id < (this.cellsAmount - (this.gridSide+2)) && !isRightEdge) {
+      if (cell.id < (this.cellsAmount - (this.gridSide + 2)) && !isRightEdge) {
         const newId = this.cells[cell.id + 1].id
         const newSquare = this.cells[newId]
         if (!newSquare.bomb)
           this.clickCell(newSquare)
       }
-      if (cell.id < (this.cellsAmount - (this.gridSide+2))) {
+      if (cell.id < (this.cellsAmount - (this.gridSide + 2))) {
         const newId = this.cells[cell.id + this.gridSide].id
         const newSquare = this.cells[newId]
         if (!newSquare.bomb)
@@ -137,8 +139,17 @@ export class TableroComponent implements OnInit {
       let cell = this.cells[i];
       if (cell.bomb) {
         cell.checked = true;
+        cell.innerMsg = '💣';
         this.cells[i] = cell;
       }
+    }
+  }
+
+  checkForWin() {
+    let bombs = this.cells.filter(x => x.bomb);
+    let match = bombs.every(x => x.flag);
+    if (match) {
+      console.log('YOU WIN');
     }
   }
 
@@ -150,7 +161,7 @@ export class TableroComponent implements OnInit {
   }
   public getStylesCells() {
     return {
-      'width': `${600/this.gridSide}px`,
+      'width': `${600 / this.gridSide}px`,
     };
   }
 

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Cell } from 'src/app/models/cell';
+import { DialogMessageData } from 'src/app/models/dialogMessageData';
 import { emojis } from 'src/app/shared/const/constantes';
+import { SharedService } from 'src/app/shared/services/shared.service';
 
 @Component({
   selector: 'app-tablero',
@@ -20,7 +22,7 @@ export class TableroComponent implements OnInit {
 
 
 
-  constructor() {
+  constructor( private svcShared: SharedService) {
     this.initialize();
     this.createBoard();
   }
@@ -163,6 +165,14 @@ export class TableroComponent implements OnInit {
       }
     }
     this.stopTimer();
+
+    let dataDialog: DialogMessageData = {
+      state: true,
+      bodyMsg: 'Has podido finalizar el juego exitosamente!!',
+      time: this.getFinishTime(),
+      title: 'Felicitaciones'
+    };
+    this.svcShared.openDialogMensaje(dataDialog);
   }
 
   checkForWin() {
@@ -172,6 +182,15 @@ export class TableroComponent implements OnInit {
       console.log('YOU WIN');
     }
     this.stopTimer();
+    
+    let dataDialog: DialogMessageData = {
+      state: true,
+      bodyMsg: 'Has podido finalizar el juego exitosamente!!',
+      time: this.getFinishTime(),
+      title: 'Felicitaciones'
+    };
+    let resultado = this.svcShared.openDialogMensaje(dataDialog);
+    console.log(resultado);
   }
 
   public getStylesTablero() {
@@ -203,7 +222,10 @@ export class TableroComponent implements OnInit {
     while (num.length < size) num = "0" + num;
     return num;
   }
-
-
-
+  getFinishTime(){
+    var minutes = Math.floor(this.time / 60);
+    var seconds = this.time - minutes * 60;
+    let result = `${this.leadingZeros(minutes,2)}:${this.leadingZeros(seconds,2)}`;
+    return result;
+  }
 }

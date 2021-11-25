@@ -1,8 +1,8 @@
-<div class="p-2 contenedor-juego d-flex flex-column align-items-center">
+<div class="p-1 contenedor-juego d-flex flex-column align-items-center">
     <div class="header d-flex flex-row justify-content-between align-items-center p-2">
         <div class="d-flex flex-row justify-content-start w-100">
             <div class="digital d-flex flex-row justify-content-end">
-                <span>{{leadingZeros(bombAmount-flags, 5)}}</span>
+                <span>{{leadingZeros(bombAmount-flags, 4)}}</span>
             </div>
         </div>
         <div class="title d-flex flex-row justify-content-center w-100">
@@ -17,7 +17,7 @@
     <div class="tablero" [ngStyle]="getStylesTablero()">
         <div class="casillero" [ngStyle]="getStylesCells()"  [ngClass]="{'checked': cell.checked}" (click)="clickCell(cell)" (contextmenu)="addFlag($event,cell)" *ngFor="let cell of cells">
             <div class="d-flex flex-row justify-content-center align-items-center h-100 w-100">
-                <span *ngIf="cell.checked || cell.flag" [ngClass]="{'one': cell.amountBombs == 1 && !cell.flag , 
+                <span *ngIf="cell.checked || cell.flag || cell.questionMark" [ngClass]="{'one': cell.amountBombs == 1 && !cell.flag , 
                 'two': cell.amountBombs == 2 || (cell.flag && cell.bomb && cell.checked), 'three': cell.amountBombs == 3 || (cell.flag && !cell.checked),
                 'four': cell.amountBombs >= 4 && !cell.flag }">
                     {{cell.innerMsg}}

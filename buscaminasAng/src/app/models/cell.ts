@@ -5,4 +5,5 @@ export interface Cell{
     amountBombs: number;
     id: number;
     innerMsg: string;
+    questionMark: boolean;
 }

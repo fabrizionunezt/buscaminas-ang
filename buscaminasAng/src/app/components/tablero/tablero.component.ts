@@ -9,15 +9,16 @@ import { emojis } from 'src/app/shared/const/constantes';
 })
 export class TableroComponent implements OnInit {
 
-  gridSide: number = 20;
+  gridSide: number = 10;
   cellsAmount: number = 0;
   cells: Cell[] = [];
-  bombAmount: number = 30;
+  bombAmount: number = 5;
   isGameOver: boolean = false;
   flags: number = 0;
   time: number = 0;
   timerId!: any;
-  
+
+
 
   constructor() {
     this.initialize();
@@ -39,7 +40,8 @@ export class TableroComponent implements OnInit {
         checked: false,
         flag: false,
         id: 0,
-        innerMsg: ''
+        innerMsg: '',
+        questionMark: false
       }
       if (this.cells.length >= (amountCells - this.bombAmount)) {
         cell.bomb = true;
@@ -76,23 +78,37 @@ export class TableroComponent implements OnInit {
   addFlag(event: any, cell: Cell) {
     event.preventDefault();
     if (this.isGameOver) return
-    if (!cell.checked && (this.flags < this.bombAmount) || cell.flag) {
+
+    if (!cell.checked ) {
+      if (!cell.questionMark && cell.flag) {
+        cell.flag = false;
+        cell.questionMark = true;
+        cell.innerMsg = ' ? ';
+        this.flags--;
+        return;
+      }
+      else if(cell.questionMark) {
+        cell.innerMsg = '';
+        cell.questionMark = false;
+        return;
+      }
+    }
+    
+    if (!cell.checked && (this.flags < this.bombAmount)  && !cell.questionMark) {
       if (!cell.flag) {
         cell.flag = true;
         cell.innerMsg = ' 🚩';
         this.flags++;
         this.checkForWin()
-      } else {
-        cell.flag = false;
-        cell.innerMsg = '';
-        this.flags--
+        return;
       }
     }
+    
   }
 
   clickCell(cell: Cell) {
     if (this.isGameOver) return
-    if (cell.checked || cell.flag) return
+    if (cell.checked || cell.flag || cell.questionMark) return
     if (cell.bomb) {
       this.gameOver()
     } else {
@@ -166,26 +182,28 @@ export class TableroComponent implements OnInit {
   }
   public getStylesCells() {
     return {
-      'width': `${600 / this.gridSide}px`,
+      'width': `${500 / this.gridSide}px`,
     };
   }
 
-  initializeTimer(){
+  initializeTimer() {
     this.timerId = setInterval(() => {
       this.time++;
     }, 1000);
-    
+
   }
-  stopTimer(){
-    if(this.isGameOver){
+  stopTimer() {
+    if (this.isGameOver) {
       clearInterval(this.timerId);
     }
   }
 
-  leadingZeros(value :number, size:number) {
+  leadingZeros(value: number, size: number) {
     let num = value.toString();
     while (num.length < size) num = "0" + num;
     return num;
   }
+
+
 
 }

@@ -2,14 +2,17 @@ $colorCasillero: #c0c0c0;
 $bordeClaro: #fcfcfc;
 $bordeOscuro: #868780;
 .contenedor-juego {
-  background-color: lightgray;
+  color: #fff;
+  background-image: url("../../../assets/winxp.jpg");  
+  background-size: 100%;  
+  background-size: cover;  
   height: 100vh;
   width: 100vw;
   
   .header {
     font-family: 'digital';
     height: 50px;
-    width: 600px;
+    width: 500px;
     background-color: darkgray;
     font-size: 25px;
     .digital{
@@ -20,8 +23,8 @@ $bordeOscuro: #868780;
     }
   }
   .tablero {
-    height: 600px;
-    width: 600px;
+    height: 500px;
+    width: 500px;
     display: grid;
     
     
@@ -34,6 +37,7 @@ $bordeOscuro: #868780;
       border-bottom: 4px solid $bordeOscuro;
       font-weight: bolder;
       font-size: 20px;
+      color: #000;
       .one {
         color: #0007e6;
       }

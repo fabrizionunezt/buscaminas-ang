@@ -30,6 +30,26 @@ $bordeOscuro: #868780;
       border-top: 4px solid $bordeClaro;
       border-right: 4px solid $bordeOscuro;
       border-bottom: 4px solid $bordeOscuro;
+      font-weight: bolder;
+      font-size: 20px;
+      .one {
+        color: #0007e6;
+      }
+      
+      .two {
+        color: #017f0a;
+      }
+      
+      .three {
+        color: #f10c09;
+      }
+      
+      .four{
+        color: #ac24c7;
+      }
+      &.checked{
+          border: 1px solid $bordeOscuro !important;
+      }
     }
   }
 }

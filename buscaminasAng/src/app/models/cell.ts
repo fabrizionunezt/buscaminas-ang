@@ -3,4 +3,6 @@ export interface Cell{
     checked: boolean;
     flag: boolean;
     amountBombs: number;
+    id: number;
+    innerMsg: string;
 }

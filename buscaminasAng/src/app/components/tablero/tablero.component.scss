@@ -19,12 +19,10 @@ $bordeOscuro: #868780;
     height: 600px;
     width: 600px;
     display: grid;
-    grid-template-columns: repeat(10, 1fr);
-    grid-template-rows: repeat(10, 1fr);
+    
     
     .casillero {
       aspect-ratio: 1;
-      width: 60px;
       background-color: $colorCasillero;
       border-left: 4px solid $bordeClaro;
       border-top: 4px solid $bordeClaro;

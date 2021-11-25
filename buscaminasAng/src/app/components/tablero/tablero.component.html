@@ -4,8 +4,8 @@
         <div class="title"></div>
         <div class="flags"></div>
     </div>
-    <div class="tablero">
-        <div class="casillero" [ngClass]="{'checked': cell.checked}" (click)="clickCell(cell)" *ngFor="let cell of cells">
+    <div class="tablero" [ngStyle]="getStylesTablero()">
+        <div class="casillero" [ngStyle]="getStylesCells()"  [ngClass]="{'checked': cell.checked}" (click)="clickCell(cell)" *ngFor="let cell of cells">
             <div class="d-flex flex-row justify-content-center align-items-center h-100 w-100">
                 <span *ngIf="cell.checked" [ngClass]="{'one': cell.amountBombs == 1 , 
                 'two': cell.amountBombs == 2, 'three': cell.amountBombs == 3, 'four': cell.amountBombs >= 4 }">

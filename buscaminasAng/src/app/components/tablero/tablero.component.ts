@@ -8,7 +8,7 @@ import { Cell } from 'src/app/models/cell';
 })
 export class TableroComponent implements OnInit {
 
-  gridSide: number = 20;
+  gridSide: number = 15;
   cellsAmount: number = 0;
   cells: Cell[] = [];
   bombAmount: number = 20;
@@ -123,6 +123,18 @@ export class TableroComponent implements OnInit {
         this.cells[i] = cell;
       }
     }
+  }
+
+  public getStylesTablero() {
+    return {
+      'grid-template-columns': `repeat(${this.gridSide}, 1fr)`,
+      'grid-template-rows': `repeat(${this.gridSide}, 1fr)`
+    };
+  }
+  public getStylesCells() {
+    return {
+      'width': `${600/this.gridSide}px`,
+    };
   }
 
 }

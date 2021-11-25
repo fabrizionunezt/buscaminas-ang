@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Cell } from 'src/app/models/cell';
 import { DialogMessageData } from 'src/app/models/dialogMessageData';
 import { emojis } from 'src/app/shared/const/constantes';
@@ -23,7 +24,7 @@ export class TableroComponent implements OnInit {
 
 
 
-  constructor(private svcShared: SharedService, private router) {
+  constructor(private svcShared: SharedService, private router: Router) {
     this.initialize();
     this.createBoard();
   }
@@ -179,6 +180,8 @@ export class TableroComponent implements OnInit {
     if (reiniciar) {
       this.cleanData();
       this.createBoard();
+    }else{
+      this.redirectMenu();
     }
   }
 
@@ -199,6 +202,8 @@ export class TableroComponent implements OnInit {
       if (reiniciar) {
         this.cleanData();
         this.createBoard();
+      }else{
+        this.redirectMenu();
       }
     }
 
@@ -262,5 +267,9 @@ export class TableroComponent implements OnInit {
     if(emoji){
       this.image = emoji;
     }
+  }
+
+  redirectMenu(){
+    this.router.navigateByUrl('menu');
   }
 }

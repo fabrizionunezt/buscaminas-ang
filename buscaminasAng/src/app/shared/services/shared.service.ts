@@ -7,7 +7,8 @@ import { DialogMessageComponent } from '../components/dialog-message/dialog-mess
   providedIn: 'root'
 })
 export class SharedService {
-
+  gridSide: number = 8;
+  bombAmount: number = 10;
   constructor(public dialog: MatDialog) { }
 
   openDialogMensaje(data: DialogMessageData) {

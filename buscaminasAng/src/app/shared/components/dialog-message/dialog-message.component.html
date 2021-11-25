@@ -1,22 +1,37 @@
-<div class="container-fluid h-100 w-100 d-flex flex-column">
-    <div class="d-flex flex-row justify-content-center w-100">
-        <h1 mat-dialog-title [ngClass]="{'titulo':true,'text-danger': !data.state,'text-success': data.state}">
-            ¡¡¡{{data.title}}!!!</h1>
+<div class="window w-100 h-100">
+    <div class="title-bar">
+        <div class="title-bar-text">
+            Buscaminas.exe
+        </div>
+        <div class="title-bar-controls">
+            <button aria-label="Close"></button>
+        </div>
     </div>
-    <div mat-dialog-content class="d-flex flex-column h-100 justify-content-between">
-        <div class="body-dialog">
-            <div class="message-dialog">
-                <p>{{data.bodyMsg}}</p>
-                <p>Tu tiempo fue de:</p>
-                <div class="d-flex flex-row justify-content-center w-100">
-                    <span class="tiempo">{{data.time}}</span>
+    <div class="window-body d-flex flex-column justify-content-center h-75 align-items-center">
+        <div class="d-flex flex-row justify-content-center w-100">
+            <h1 mat-dialog-title [ngClass]="{'titulo':true,'text-danger': !data.state,'text-success': data.state}">
+                ¡¡¡{{data.title}}!!!</h1>
+        </div>
+        <div mat-dialog-content class="d-flex flex-column h-100 justify-content-between">
+            <div class="body-dialog">
+                <div class="message-dialog">
+                    <p>{{data.bodyMsg}}</p>
+                    <p>Tu tiempo fue de:</p>
+                    <div class="d-flex flex-row justify-content-center w-100">
+                        <span class="tiempo">{{data.time}}</span>
+                    </div>
                 </div>
             </div>
-        </div>
 
+        </div>
+        <div mat-dialog-actions class="buttons d-flex flex-row justify-content-between align-items-botom">
+            <div>
+                <button (click)="reiniciar()">Reiniciar</button>
+            </div>
+            <div>
+                <button [mat-dialog-close]="false" cdkFocusInitial>Volver al menu</button>
+            </div>
+        </div>
     </div>
-    <div mat-dialog-actions class="buttons d-flex flex-row justify-content-between align-items-botom">
-        <button [ngClass]="{'btn-dialog btn btn-lg': true,'btn-danger': !data.state,'btn-success': data.state}" (click)="reiniciar()">Reiniciar</button>
-        <button [ngClass]="{'btn-dialog btn btn-lg': true,'btn-danger': !data.state,'btn-success': data.state}" [mat-dialog-close]="false" cdkFocusInitial>Volver al menu</button>
-    </div>
+
 </div>

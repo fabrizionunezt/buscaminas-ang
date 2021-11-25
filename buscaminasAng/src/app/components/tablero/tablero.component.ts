@@ -11,10 +11,10 @@ import { SharedService } from 'src/app/shared/services/shared.service';
 })
 export class TableroComponent implements OnInit {
 
-  gridSide: number = 10;
+  gridSide: number = 0;
   cellsAmount: number = 0;
   cells: Cell[] = [];
-  bombAmount: number = 5;
+  bombAmount: number = 0;
   isGameOver: boolean = false;
   flags: number = 0;
   time: number = 0;
@@ -23,7 +23,7 @@ export class TableroComponent implements OnInit {
 
 
 
-  constructor(private svcShared: SharedService) {
+  constructor(private svcShared: SharedService, private router) {
     this.initialize();
     this.createBoard();
   }
@@ -31,6 +31,8 @@ export class TableroComponent implements OnInit {
   ngOnInit(): void {
   }
   initialize() {
+    this.bombAmount = this.svcShared.bombAmount;
+    this.gridSide = this.svcShared.gridSide;
     this.cellsAmount = this.gridSide * this.gridSide;
   }
 

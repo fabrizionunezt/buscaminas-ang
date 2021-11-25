@@ -1,1 +1,33 @@
-<p>menu works!</p>
+<div class="contenedor-juego d-flex flex-row justify-content-center align-items-center">
+    <div class="window">
+        <div class="title-bar">
+            <div class="title-bar-text">
+                Buscaminas.exe
+            </div>
+            <div class="title-bar-controls">
+                <button aria-label="Minimize"></button>
+                <button aria-label="Maximize"></button>
+                <button aria-label="Close"></button>
+            </div>
+        </div>
+        <div class="window-body d-flex flex-column justify-content-center h-75 align-items-center">
+            <button (click)="play()">JUGAR</button>
+            <div class="d-flex flex-column justify-content-start difficulty">
+                <p>Dificultad:</p>
+                <div class="field-row">
+                    <input id="radio5" type="radio" value="easy" [(ngModel)]="difficulty" name="first-example">
+                    <label for="radio5">Facil</label>
+                </div>
+                <div class="field-row">
+                    <input id="radio6" type="radio" value="medium" [(ngModel)]="difficulty" name="first-example">
+                    <label for="radio6">Medio</label>
+                </div>
+                <div class="field-row">
+                    <input id="radio7" type="radio" value="hard" [(ngModel)]="difficulty" name="first-example">
+                    <label for="radio7">Dificil</label>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -4,8 +4,9 @@ import { MenuComponent } from './components/menu/menu.component';
 import { TableroComponent } from './components/tablero/tablero.component';
 
 const routes: Routes = [
-  {path:'', component: TableroComponent},
-  {path:'menu', component: MenuComponent}
+  {path:'buscaminas', component: TableroComponent},
+  {path:'menu', component: MenuComponent},
+  {path: '', redirectTo: 'menu', pathMatch:'full'}
 ];
 
 @NgModule({

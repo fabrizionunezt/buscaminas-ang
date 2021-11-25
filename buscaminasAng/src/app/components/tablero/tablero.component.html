@@ -5,6 +5,10 @@
         <div class="flags"></div>
     </div>
     <div class="tablero">
-        <div class="casillero" *ngFor="let cell of cells"></div>
+        <div class="casillero" *ngFor="let cell of cells">
+            <div class="d-flex flex-row justify-content-center">
+                {{cell.bomb? 'BOMB': cell.amountBombs}}
+            </div>
+        </div>
     </div>
 </div>
